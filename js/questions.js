@@ -56,7 +56,7 @@ const MASTER_QUESTIONS = [
     },
     {
         id: "q8",
-        text: "商品画像を見せて）これありますか？",
+        text: "商品画像を見せて　これありますか？",
         audio: "Do you have this?",
         sentence: "We don't have it",
         answer_jp: "当店では取り扱っておりません"
@@ -70,7 +70,7 @@ const MASTER_QUESTIONS = [
     },
     {
         id: "q10",
-        text: "袋はいりますか？（店員役として）",
+        text: "袋はいりますか？",
         audio: "Do you need a bag?",
         sentence: "Plastic bags cost five yen",
         answer_jp: "レジ袋は5円かかります"
@@ -167,7 +167,7 @@ const MASTER_QUESTIONS = [
     // 4. Additional Scenarios
     {
         id: "q23",
-        text: "すみません（店員を呼ぶ）",
+        text: "すみません",
         audio: "Excuse me",
         sentence: "Just a moment please",
         answer_jp: "少々お待ちください"
@@ -188,28 +188,28 @@ const MASTER_QUESTIONS = [
     },
     {
         id: "q26",
-        text: "（支払いが1000円足りません）",
+        text: "支払いが1000円足りません",
         audio: "Here you go",
         sentence: "May I have another one thousand yen bill",
         answer_jp: "1000円札をもう一枚いただけますか"
     },
     {
         id: "q27",
-        text: "（支払いが1万円足りません）",
+        text: "支払いが1万円足りません",
         audio: "Here you go",
         sentence: "May I have another ten thousand yen bill",
         answer_jp: "1万円札をもう一枚いただけますか"
     },
     {
         id: "q28",
-        text: "（支払いが100円足りません）",
+        text: "支払いが100円足りません",
         audio: "Here you go",
         sentence: "May I have another one hundred yen coin",
         answer_jp: "100円玉をもう一枚いただけますか"
     },
     {
         id: "q29",
-        text: "これいくらですか？",
+        text: "これいくらですか？（1365円）",
         audio: "How much is this?",
         sentence: "It is one thousand three hundred sixty five yen tax is included",
         answer_jp: "1365円です。税込みです"
