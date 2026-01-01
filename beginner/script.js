@@ -216,7 +216,7 @@ function handleAnswer(selectedOption, clickedBtn) {
         // Score Popup
         const popup = document.createElement('div');
         popup.classList.add('score-popup');
-        popup.innerHTML = `<span style="color:#FF9EC7;">${POINTS_PER_QUESTION}</span> + <span style="color:#A8E6CF;">${bonus}</span>`;
+        popup.innerHTML = `<span style="color:#FF9EC7;">${POINTS_PER_QUESTION}</span> + <span style="color:#A8E6CF;">${timeBonus}</span>`;
         if (document.querySelector('.hud')) document.querySelector('.hud').appendChild(popup);
         setTimeout(() => popup.remove(), 1500);
 
