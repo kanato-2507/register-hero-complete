@@ -240,7 +240,28 @@ function handleAnswer(selectedOption, clickedBtn) {
 
             // Feedback Message
             const randomMsg = ENCOURAGEMENT[Math.floor(Math.random() * ENCOURAGEMENT.length)];
-            feedbackMsg.textContent = randomMsg;
+
+            // Bilingual Feedback Grid
+            feedbackMsg.innerHTML = `
+                <div style="text-align:center; font-weight:bold; margin-bottom:0.5rem;">${randomMsg}</div>
+                <div class="feedback-grid">
+                    <div class="row question">
+                        <span class="label">Customer</span>
+                        <div class="content">
+                            <div class="en">🔊 ${currentQ.audio}</div>
+                            <div class="jp">${currentQ.text}</div>
+                        </div>
+                    </div>
+                    <div class="row answer">
+                        <span class="label">You</span>
+                        <div class="content">
+                            <div class="en">💬 ${currentQ.sentence}</div>
+                            <div class="jp">${currentQ.answer_jp || ''}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
             feedbackMsg.classList.remove('hidden', 'error');
             feedbackMsg.classList.add('success');
 
@@ -266,7 +287,20 @@ function handleAnswer(selectedOption, clickedBtn) {
             clickedBtn.classList.add('wrong');
             if (correctBtn) correctBtn.classList.add('correct'); // Show correct answer
 
-            feedbackMsg.textContent = "Try Again!";
+            // Wrong Answer Feedback
+            feedbackMsg.innerHTML = `
+                <div style="text-align:center; font-weight:bold; margin-bottom:0.5rem;">Try Again!</div>
+                <div class="feedback-grid">
+                     <div class="row answer">
+                        <span class="label">Correct</span>
+                        <div class="content">
+                            <div class="en">💬 ${currentQuestions[currentQuestionIndex].sentence}</div>
+                            <div class="jp">${currentQuestions[currentQuestionIndex].answer_jp || ''}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
             feedbackMsg.classList.add('error');
             feedbackMsg.classList.remove('hidden', 'success');
             setTimeout(() => {
@@ -299,7 +333,20 @@ function handleTimeout() {
     const retryQ = { ...currentQuestions[currentQuestionIndex], isRetry: true };
     currentQuestions.push(retryQ);
 
-    feedbackMsg.textContent = "Time's Up! Correct: " + currentQuestions[currentQuestionIndex].sentence;
+    // Timeout Feedback
+    feedbackMsg.innerHTML = `
+        <div style="text-align:center; font-weight:bold; margin-bottom:0.5rem;">Time's Up!</div>
+         <div class="feedback-grid">
+                <div class="row answer">
+                <span class="label">Correct</span>
+                <div class="content">
+                    <div class="en">💬 ${currentQuestions[currentQuestionIndex].sentence}</div>
+                    <div class="jp">${currentQuestions[currentQuestionIndex].answer_jp || ''}</div>
+                </div>
+            </div>
+        </div>
+    `;
+
     feedbackMsg.classList.remove('hidden', 'error');
     feedbackMsg.classList.add('error');
 

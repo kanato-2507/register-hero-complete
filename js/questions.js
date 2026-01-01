@@ -9,61 +9,71 @@ const MASTER_QUESTIONS = [
         id: "q1",
         text: "これ、免税になりますか？",
         audio: "Is this tax-free?",
-        sentence: "It's not a duty-free shop"
+        sentence: "It's not a duty-free shop",
+        answer_jp: "ここは免税店ではありません"
     },
     {
         id: "q2",
         text: "この価格は税込みですか？",
         audio: "Is tax included in this price?",
-        sentence: "Yes tax is included"
+        sentence: "Yes tax is included",
+        answer_jp: "はい、税込価格です"
     },
     {
         id: "q3",
         text: "プレゼント包装できますか？",
         audio: "Can you wrap this for a gift?",
-        sentence: "Certainly free of charge"
+        sentence: "Certainly free of charge",
+        answer_jp: "かしこまりました、無料で承ります"
     },
     {
         id: "q4",
         text: "クレジットカード使えますか？",
         audio: "Do you accept credit cards?",
-        sentence: "Yes we do"
+        sentence: "Yes we do",
+        answer_jp: "はい、ご利用いただけます"
     },
     {
         id: "q5",
         text: "交通系ICカードは使えますか？",
         audio: "Can I use Suica or Pasmo?",
-        sentence: "Yes you can use transportation IC cards"
+        sentence: "Yes you can use transportation IC cards",
+        answer_jp: "はい、交通系ICカードをご利用いただけます"
     },
     {
         id: "q6",
         text: "返品できますか？",
         audio: "Can I return this?",
-        sentence: "I'm sorry we don't accept returns"
+        sentence: "I'm sorry we don't accept returns",
+        answer_jp: "申し訳ありませんが、返品はお受けできません"
     },
     {
         id: "q7",
         text: "営業時間は何時までですか？",
         audio: "What time do you close?",
-        sentence: "We are open from ten AM to eight PM"
+        sentence: "We are open from ten AM to eight PM",
+        answer_jp: "午前10時から午後8時まで営業しております"
     },
     {
         id: "q8",
         text: "商品画像を見せて）これありますか？",
         audio: "Do you have this?",
-        sentence: "We don't have it"
+        sentence: "We don't have it",
+        answer_jp: "当店では取り扱っておりません"
     },
     {
         id: "q9",
         text: "一番人気はどれですか？",
         audio: "Which one is the most popular?",
-        sentence: "This novel is the number one bestseller"
+        sentence: "This novel is the number one bestseller",
+        answer_jp: "こちらの小説が一番人気です"
     },
     {
         id: "q10",
         text: "袋はいりますか？（店員役として）",
         audio: "Do you need a bag?",
-        sentence: "Plastic bags cost five yen"
+        sentence: "Plastic bags cost five yen",
+        answer_jp: "レジ袋は5円かかります"
     },
 
     // 2. Locations / Directions
@@ -71,49 +81,57 @@ const MASTER_QUESTIONS = [
         id: "q11",
         text: "コミック売り場はどこですか？",
         audio: "Where are the comics?",
-        sentence: "Go straight down this aisle and it's on your left"
+        sentence: "Go straight down this aisle and it's on your left",
+        answer_jp: "この通路をまっすぐ行くと左手にございます"
     },
     {
         id: "q12",
         text: "文房具は置いていますか？",
         audio: "Do you sell stationery?",
-        sentence: "Stationery is on the left side of the store"
+        sentence: "Stationery is on the left side of the store",
+        answer_jp: "文房具は店内の左側にございます"
     },
     {
         id: "q13",
         text: "ここは何階ですか？",
         audio: "What floor is this?",
-        sentence: "This is the third floor"
+        sentence: "This is the third floor",
+        answer_jp: "こちらは3階でございます"
     },
     {
         id: "q14",
         text: "ここから新館に行けますか？",
         audio: "Can I go to the new building from here?",
-        sentence: "The third floor is not connected to the new building"
+        sentence: "The third floor is not connected to the new building",
+        answer_jp: "3階からは新館につながっておりません"
     },
     {
         id: "q15",
         text: "2階へはどう行けばいいですか？",
         audio: "How do I get to the 2nd floor?",
-        sentence: "Take the escalator down to the second floor"
+        sentence: "Take the escalator down to the second floor",
+        answer_jp: "エスカレーターで2階へ降りてください"
     },
     {
         id: "q16",
         text: "エスカレーターはどこですか？",
         audio: "Where is the escalator?",
-        sentence: "The escalator is over there"
+        sentence: "The escalator is over there",
+        answer_jp: "エスカレーターはあちらにございます"
     },
     {
         id: "q17",
         text: "電気屋さんはどこですか？",
         audio: "Where is the electronics store?",
-        sentence: "The electronics store is on the fourth floor of the new building"
+        sentence: "The electronics store is on the fourth floor of the new building",
+        answer_jp: "電気屋は新館の4階にあります"
     },
     {
         id: "q18",
         text: "トイレはどこですか？",
         audio: "Where is the restroom?",
-        sentence: "The restroom is next to the elevator"
+        sentence: "The restroom is next to the elevator",
+        answer_jp: "お手洗いはエレベーターの隣にございます"
     },
 
     // 3. Tourist Specific
@@ -121,24 +139,28 @@ const MASTER_QUESTIONS = [
         id: "q19",
         text: "日本語の地図はありますか？",
         audio: "Do you have a map in Japanese?",
-        sentence: "Yes we have maps at the counter"
+        sentence: "Yes we have maps at the counter",
+        answer_jp: "はい、カウンターに地図がございます"
     },
     {
         id: "q20",
         text: "荷物を預かってもらえますか？",
         audio: "Can I leave my luggage here?",
-        sentence: "Sorry we don't have a cloakroom"
+        sentence: "Sorry we don't have a cloakroom",
+        answer_jp: "申し訳ありませんが、クローク(荷物預かり)はございません"
     },
     {
         id: "q21",
         text: "Wi-Fiはありますか？",
         audio: "Do you have Wi-Fi?",
-        sentence: "We provide free Wi-Fi for customers"
+        sentence: "We provide free Wi-Fi for customers",
+        answer_jp: "お客様用の無料Wi-Fiがございます"
     },
     {
         id: "q22",
         text: "写真を撮ってもいいですか？",
         audio: "Can I take a picture?",
-        sentence: "Please refrain from taking pictures of magazines"
+        sentence: "Please refrain from taking pictures of magazines",
+        answer_jp: "雑誌の撮影はご遠慮ください"
     }
 ];

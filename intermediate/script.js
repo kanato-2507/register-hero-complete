@@ -230,8 +230,30 @@ function checkAnswer() {
             qData.answeredCorrectly = true;
 
             // Random encouragement message
+            // Random encouragement message
             const randomMsg = ENCOURAGEMENT[Math.floor(Math.random() * ENCOURAGEMENT.length)];
-            feedbackMsg.textContent = randomMsg;
+
+            // Bilingual Feedback Grid
+            feedbackMsg.innerHTML = `
+                <div style="text-align:center; font-weight:bold; margin-bottom:0.5rem;">${randomMsg}</div>
+                <div class="feedback-grid">
+                    <div class="row question">
+                        <span class="label">Customer</span>
+                        <div class="content">
+                            <div class="en">🔊 ${qData.audio}</div>
+                            <div class="jp">${qData.text}</div>
+                        </div>
+                    </div>
+                    <div class="row answer">
+                        <span class="label">You</span>
+                        <div class="content">
+                            <div class="en">💬 ${qData.sentence}</div>
+                            <div class="jp">${qData.answer_jp || ''}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
             feedbackMsg.classList.remove('hidden', 'error');
             feedbackMsg.classList.add('success');
 
@@ -333,9 +355,26 @@ function handleTimeout() {
     // So we need to modify the push logic inside finishQuestion, which we did above.
     // Wait, finishQuestion reads from array again.
 
-    feedbackMsg.textContent = "Time's Up! Correct: " + currentQuestions[currentQuestionIndex].sentence;
+    // finishQuestion logic uses currentQuestionIndex which points to current OLD question.
+    // So we need to modify the push logic inside finishQuestion, which we did above.
+    // Wait, finishQuestion reads from array again.
+
+    // Timeout Feedback
+    feedbackMsg.innerHTML = `
+        <div style="text-align:center; font-weight:bold; margin-bottom:0.5rem;">Time's Up!</div>
+         <div class="feedback-grid">
+                <div class="row answer">
+                <span class="label">Correct</span>
+                <div class="content">
+                    <div class="en">💬 ${currentQuestions[currentQuestionIndex].sentence}</div>
+                    <div class="jp">${currentQuestions[currentQuestionIndex].answer_jp || ''}</div>
+                </div>
+            </div>
+        </div>
+    `;
+
     feedbackMsg.classList.remove('hidden', 'error');
-    feedbackMsg.classList.remove('hidden', 'error');
+    feedbackMsg.classList.add('error');
     speak(currentQuestions[currentQuestionIndex].sentence);
     finishQuestion(false); // Mark as incorrect to trigger retry
 }
