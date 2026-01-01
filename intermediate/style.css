@@ -89,6 +89,16 @@ body {
     z-index: 10;
 }
 
+.next-btn-area {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.next-btn-area.hidden {
+    display: none;
+}
+
 .screen.hidden {
     display: none;
 }
