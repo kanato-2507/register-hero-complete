@@ -150,6 +150,8 @@ body {
 .hud {
     width: 100%;
     margin-bottom: 1rem;
+    position: relative;
+    /* Ensure popup positions correct */
 }
 
 .timer-bar {
@@ -417,9 +419,11 @@ body {
     font-size: 1.5rem;
     font-weight: bold;
     color: #FF9EC7;
+    color: #FF9EC7;
     pointer-events: none;
     animation: popUpFade 1.5s ease-out forwards;
-    z-index: 20;
+    z-index: 1000;
+    /* Ensure visibility */
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background: rgba(255, 255, 255, 0.9);
     padding: 0.2rem 0.8rem;

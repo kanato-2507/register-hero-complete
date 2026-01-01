@@ -197,6 +197,8 @@ function handleAnswer(selectedOption, clickedBtn) {
         isAnswering = true;
         clearInterval(timerInterval);
 
+        const qData = currentQuestions[currentQuestionIndex];
+
         // Find correct button visually
         const allButtons = document.querySelectorAll('.option-btn');
         let correctBtn = null;
