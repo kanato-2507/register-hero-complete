@@ -66,6 +66,10 @@ body {
     display: none;
 }
 
+.hidden {
+    display: none !important;
+}
+
 .title {
     font-size: 3rem;
     font-weight: 700;
