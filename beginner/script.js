@@ -4,112 +4,8 @@ const POINTS_PER_QUESTION = 100;
 
 // Quiz Data - Station Bookstore Edition (Tourist Friendly)
 // Quiz Data - Station Bookstore Edition (Tourist Friendly)
-const QUESTIONS = [
-    {
-        text: "これ、免税になりますか？",
-        audio: "Is this tax-free?",
-        options: ["It's not a duty-free shop.", "Yes, certainly.", "It is a passport."],
-        correct: 0
-    },
-    {
-        text: "この価格は税込みですか？",
-        audio: "Is tax included in this price?",
-        options: ["Yes, tax is included.", "No, tax is extra.", "It is 10%."],
-        correct: 0
-    },
-    {
-        text: "プレゼント包装できますか？",
-        audio: "Can you wrap this for a gift?",
-        options: ["Certainly, free of charge.", "No, do it yourself.", "I like ribbons."],
-        correct: 0
-    },
-    {
-        text: "これ、いくら？",
-        audio: "How much is this?",
-        options: ["It is 1,200 yen.", "It is expensive.", "I am fine."],
-        correct: 0
-    },
-    {
-        text: "この本を探しているのですが…（スマホ画面を見せて）",
-        audio: "I am looking for this book.",
-        options: ["Let me check the stock.", "It is nice.", "Go to the library."],
-        correct: 0
-    },
-    {
-        text: "図書カードは使えますか？(訪日客)",
-        audio: "Do you accept book gift cards?",
-        options: ["Yes, we do.", "No, cash only.", "It is paper."],
-        correct: 0
-    },
-    {
-        text: "マンガ売り場はどこですか？",
-        audio: "Where are the comics?",
-        options: ["Go straight down this aisle and it's on your left.", "I don't know.", "It is Wednesday."],
-        correct: 0
-    },
-    // New Questions for Station/Tourist Context
-    {
-        text: "ここは何階ですか？",
-        audio: "What floor is this?",
-        options: ["This is the third floor.", "It is the ground floor.", "Look at the map."],
-        correct: 0
-    },
-    {
-        text: "ここから新館に行けますか？",
-        audio: "Can I go to the new building from here?",
-        options: ["The third floor is not connected to the new building.", "Yes, go straight.", "It is far."],
-        correct: 0
-    },
-    {
-        text: "2階へはどう行けばいいですか？",
-        audio: "How do I get to the 2nd floor?",
-        options: ["Take the escalator down to the second floor.", "Jump.", "Take the elevator up."],
-        correct: 0
-    },
-    {
-        text: "エスカレーターはどこですか？",
-        audio: "Where is the escalator?",
-        options: ["The escalator is over there.", "I don't know.", "It is stopping."],
-        correct: 0
-    },
-    {
-        text: "（商品画像を見せて）これありますか？",
-        audio: "Do you have this?",
-        options: ["We don't have it.", "Yes, maybe.", "It is delicious."],
-        correct: 0
-    },
-    {
-        text: "電気屋さんはどこですか？",
-        audio: "Where is the electronics store?",
-        options: ["The electronics store is on the fourth floor of the new building.", "It is next door.", "It is in Akihabara."],
-        correct: 0
-    },
-    // Kept some generic ones that fit
-    {
-        text: "荷物を預かってもらえますか？",
-        audio: "Can I leave my luggage here?",
-        options: ["Sorry, we don't have a cloakroom.", "Yes, 500 yen.", "Your bag is big."],
-        correct: 0
-    },
-    {
-        text: "営業時間は何時まで？",
-        audio: "What time do you close?",
-        options: ["We are open from 10 AM to 8 PM.", "It is 5 o'clock.", "Tomorrow."],
-        correct: 0
-    },
-    {
-        text: "クレジットカード使えますか？",
-        audio: "Do you accept credit cards?",
-        options: ["Yes, we do.", "No, cash only.", "It is expensive."],
-        correct: 0
-    },
-    {
-        text: "返品できますか？",
-        audio: "Can I return this?",
-        options: ["I'm sorry, we don't accept returns.", "Yes, anytime.", "Maybe tomorrow."],
-        correct: 0
-    }
-];
+// Quiz Data - Use Shared Master List
+const QUESTIONS = MASTER_QUESTIONS;
 
 // Game State
 let currentQuestions = [];
@@ -163,7 +59,29 @@ function initGame() {
     // Reset speech synth
     AudioManager.unlock();
 
+    // Dynamic Start logic if needed
+    // ...
     loadQuestion();
+}
+
+function generateOptions(correctAnswer, allQuestions) {
+    // 1. Correct Answer
+    const options = [correctAnswer];
+
+    // 2. Distractors (Pick 2 random different answers)
+    const otherQuestions = allQuestions.filter(q => q.sentence !== correctAnswer);
+    // Shuffle others
+    const shuffledOthers = [...otherQuestions].sort(() => 0.5 - Math.random());
+
+    if (shuffledOthers[0]) options.push(shuffledOthers[0].sentence);
+    if (shuffledOthers[1]) options.push(shuffledOthers[1].sentence);
+
+    // Fallback if not enough questions (shouldn't happen with 20+)
+    while (options.length < 3) {
+        options.push("Secondary Check");
+    }
+
+    return options;
 }
 
 function loadQuestion() {
@@ -179,6 +97,13 @@ function loadQuestion() {
     optionsContainer.innerHTML = '';
     nextBtnContainer.classList.add('hidden'); // Hide Next button
 
+    // Retry Check
+    const isRetry = currentQuestionIndex >= 10; // Simple check based on expected length or flag
+    // Actually we should rely on array length, but since we modify it...
+    // Let's rely on index.
+
+    // ... (Existing Counter Logic) ...
+
     // Retry Mode & Counter Logic
     const initialTotal = 10;
     const isRetry = currentQuestionIndex >= initialTotal;
@@ -192,22 +117,35 @@ function loadQuestion() {
         questionCounter.textContent = `${currentQuestionIndex + 1}/${initialTotal}`;
     }
 
-    // Create Buttons with Robust Shuffle
-    const shuffledOptions = qData.options.map((opt, index) => ({ text: opt, originalIndex: index }));
+    // Dynamic Options Generation
+    // We need to generate options on the fly for THIS question
+    const correctSentence = qData.sentence;
+    const optionTexts = generateOptions(correctSentence, QUESTIONS);
 
-    // Fisher-Yates Shuffle
+    // Map to objects with index tracking
+    // We need to know which one is correct. 
+    // Let's assign originalIndex: 0=Correct, 1=Wrong, 2=Wrong (Before shuffle)
+    // Actually, generateOptions returns [Correct, Wrong1, Wrong2]
+
+    const rawOptions = optionTexts.map((text, idx) => ({
+        text: text,
+        isCorrect: text === correctSentence
+    }));
+
+    // Robust Shuffle
+    const shuffledOptions = [...rawOptions];
     for (let i = shuffledOptions.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
     }
 
-    shuffledOptions.forEach((optObj) => {
+    shuffledOptions.forEach((optObj, displayIndex) => {
         const btn = document.createElement('button');
         btn.classList.add('option-btn');
         btn.textContent = optObj.text;
-        btn.dataset.originalIndex = optObj.originalIndex; // Store index for timeout highlighting
-        // Pass the element itself or let handleAnswer find the right buttons
-        btn.addEventListener('click', (e) => handleAnswer(optObj.originalIndex, optObj.text, e.target));
+
+        // Pass the object data directly to handler
+        btn.addEventListener('click', (e) => handleAnswer(optObj, e.target));
         optionsContainer.appendChild(btn);
     });
 
@@ -245,34 +183,35 @@ function updateTimerUI() {
     }
 }
 
-function handleAnswer(selectedIndex, answerText, clickedBtn) {
+function handleAnswer(selectedOption, clickedBtn) {
     if (isAnswering) return;
     isAnswering = true;
     clearInterval(timerInterval);
 
-    // Find correct button and answer text
-    const qData = currentQuestions[currentQuestionIndex];
-    const correctIndex = qData.correct;
-
-    // Find all buttons to find the correct one visually
+    // Find correct button visually
     const allButtons = document.querySelectorAll('.option-btn');
     let correctBtn = null;
-    let correctAnswerText = ""; // To store the correct answer text
+    let correctAnswerText = "";
 
     allButtons.forEach(btn => {
-        if (parseInt(btn.dataset.originalIndex) === correctIndex) {
+        // We match by text content since we don't have stable IDs anymore
+        // (Assuming unique sentences)
+        if (btn.textContent === currentQuestions[currentQuestionIndex].sentence) {
             correctBtn = btn;
-            correctAnswerText = btn.textContent; // Get text from correct button
+            correctAnswerText = btn.textContent;
         }
     });
 
     // ALWAYS speak the correct answer, regardless of what was clicked
     speak(correctAnswerText);
 
-    const bonus = Math.ceil(timeLeft * 10);
-    const gainedPoints = POINTS_PER_QUESTION + bonus;
+    // Score Calculation (Aligned with Intermediate)
+    // Intermediate: floor(timeLeft) * 10
+    // Beginner was: timeLeft * 10 (with decimals?)
+    const timeBonus = Math.floor(timeLeft) * 10;
+    const gainedPoints = POINTS_PER_QUESTION + timeBonus;
 
-    if (selectedIndex === correctIndex) {
+    if (selectedOption.isCorrect) {
         // Correct
         clickedBtn.classList.add('correct');
         score += gainedPoints;
@@ -314,7 +253,7 @@ function handleTimeout() {
     const allButtons = document.querySelectorAll('.option-btn');
     let correctAnswerText = "";
     allButtons.forEach(btn => {
-        if (parseInt(btn.dataset.originalIndex) === correctIndex) {
+        if (btn.textContent === currentQuestions[currentQuestionIndex].sentence) {
             btn.classList.add('correct');
             correctAnswerText = btn.textContent;
         }
