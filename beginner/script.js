@@ -182,60 +182,67 @@ function updateTimerUI() {
 
 function handleAnswer(selectedOption, clickedBtn) {
     if (isAnswering) return;
-    isAnswering = true;
-    clearInterval(timerInterval);
+    try {
+        isAnswering = true;
+        clearInterval(timerInterval);
 
-    // Find correct button visually
-    const allButtons = document.querySelectorAll('.option-btn');
-    let correctBtn = null;
-    let correctAnswerText = "";
+        // Find correct button visually
+        const allButtons = document.querySelectorAll('.option-btn');
+        let correctBtn = null;
+        let correctAnswerText = "";
 
-    allButtons.forEach(btn => {
-        // We match by text content since we don't have stable IDs anymore
-        // (Assuming unique sentences)
-        if (btn.textContent === currentQuestions[currentQuestionIndex].sentence) {
-            correctBtn = btn;
-            correctAnswerText = btn.textContent;
+        allButtons.forEach(btn => {
+            // We match by text content since we don't have stable IDs anymore
+            // (Assuming unique sentences)
+            if (btn.textContent === currentQuestions[currentQuestionIndex].sentence) {
+                correctBtn = btn;
+                correctAnswerText = btn.textContent;
+            }
+        });
+
+        // ALWAYS speak the correct answer, regardless of what was clicked
+        speak(correctAnswerText);
+
+        // Score Calculation (Aligned with Intermediate)
+        // Intermediate: floor(timeLeft) * 10
+        // Beginner was: timeLeft * 10 (with decimals?)
+        const timeBonus = Math.floor(timeLeft) * 10;
+        const gainedPoints = POINTS_PER_QUESTION + timeBonus;
+
+        if (selectedOption.isCorrect) {
+            // Correct
+            clickedBtn.classList.add('correct');
+            score += gainedPoints;
+
+            // Score Popup
+            const popup = document.createElement('div');
+            popup.classList.add('score-popup');
+            popup.innerHTML = `<span style="color:#FF9EC7;">${POINTS_PER_QUESTION}</span> + <span style="color:#A8E6CF;">${timeBonus}</span>`;
+            if (document.querySelector('.hud')) document.querySelector('.hud').appendChild(popup);
+            setTimeout(() => popup.remove(), 1500);
+
+            scoreDisplay.classList.add('animate');
+            setTimeout(() => scoreDisplay.classList.remove('animate'), 500);
+
+        } else {
+            // Wrong
+            clickedBtn.classList.add('wrong');
+            if (correctBtn) correctBtn.classList.add('correct'); // Show correct answer
+
+            // Push to retry queue
+            currentQuestions.push(qData);
         }
-    });
 
-    // ALWAYS speak the correct answer, regardless of what was clicked
-    speak(correctAnswerText);
+        updateScoreUI();
 
-    // Score Calculation (Aligned with Intermediate)
-    // Intermediate: floor(timeLeft) * 10
-    // Beginner was: timeLeft * 10 (with decimals?)
-    const timeBonus = Math.floor(timeLeft) * 10;
-    const gainedPoints = POINTS_PER_QUESTION + timeBonus;
-
-    if (selectedOption.isCorrect) {
-        // Correct
-        clickedBtn.classList.add('correct');
-        score += gainedPoints;
-
-        // Score Popup
-        const popup = document.createElement('div');
-        popup.classList.add('score-popup');
-        popup.innerHTML = `<span style="color:#FF9EC7;">${POINTS_PER_QUESTION}</span> + <span style="color:#A8E6CF;">${timeBonus}</span>`;
-        if (document.querySelector('.hud')) document.querySelector('.hud').appendChild(popup);
-        setTimeout(() => popup.remove(), 1500);
-
-        scoreDisplay.classList.add('animate');
-        setTimeout(() => scoreDisplay.classList.remove('animate'), 500);
-
-    } else {
-        // Wrong
-        clickedBtn.classList.add('wrong');
-        if (correctBtn) correctBtn.classList.add('correct'); // Show correct answer
-
-        // Push to retry queue
-        currentQuestions.push(qData);
+        // Show Next Button instead of auto-advance
+        nextBtnContainer.classList.remove('hidden');
+    } catch (e) {
+        console.error("handleAnswer Error:", e);
+        isAnswering = false; // Reset lock
+        alert("エラーが発生しました: " + e.message);
+        nextBtnContainer.classList.remove('hidden'); // Try to show next anyway
     }
-
-    updateScoreUI();
-
-    // Show Next Button instead of auto-advance
-    nextBtnContainer.classList.remove('hidden');
 }
 
 function handleTimeout() {
