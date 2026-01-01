@@ -97,10 +97,7 @@ function loadQuestion() {
     optionsContainer.innerHTML = '';
     nextBtnContainer.classList.add('hidden'); // Hide Next button
 
-    // Retry Check
-    const isRetry = currentQuestionIndex >= 10; // Simple check based on expected length or flag
-    // Actually we should rely on array length, but since we modify it...
-    // Let's rely on index.
+
 
     // ... (Existing Counter Logic) ...
 

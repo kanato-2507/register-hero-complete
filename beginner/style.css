@@ -326,3 +326,34 @@ body {
     color: #666;
     margin-bottom: 2rem;
 }
+
+/* Header for Game Screen */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed rgba(255, 182, 193, 0.5);
+}
+
+.header h1 {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.quit-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: transform 0.2s;
+    opacity: 0.8;
+}
+
+.quit-btn:hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
