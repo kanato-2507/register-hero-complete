@@ -237,7 +237,7 @@ function checkAnswer() {
             // Bilingual Feedback Grid
             feedbackMsg.innerHTML = `
                 <div class="msg-box success">
-                    ${randomMsg}
+                    Correct! ${randomMsg}
                 </div>
                 <div class="feedback-grid">
                     <div class="row question">

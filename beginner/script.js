@@ -245,7 +245,7 @@ function handleAnswer(selectedOption, clickedBtn) {
             // Bilingual Feedback Grid
             feedbackMsg.innerHTML = `
                 <div class="msg-box success">
-                    ${randomMsg}
+                    Correct! ${randomMsg}
                 </div>
                 <div class="feedback-grid">
                     <div class="row question">
@@ -309,10 +309,12 @@ function handleAnswer(selectedOption, clickedBtn) {
             `;
 
             feedbackMsg.classList.remove('hidden', 'error', 'success');
-            // Timeout increased for readability
-            setTimeout(() => {
-                feedbackMsg.classList.add('hidden');
-            }, 8000);
+
+            // Layout Toggle: Hide Options on Wrong Answer too
+            optionsContainer.classList.add('hidden');
+
+            // Removed Auto-Hide Timeout so user can review at own pace
+            // Next Button is shown via common logic below
 
             // Push to retry queue with retry flag
             const retryQ = { ...currentQuestions[currentQuestionIndex], isRetry: true };
