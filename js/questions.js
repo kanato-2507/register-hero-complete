@@ -214,5 +214,26 @@ const MASTER_QUESTIONS = [
             audio: "How much is this?",
                 sentence: "It is one thousand three hundred sixty five yen tax is included",
                     answer_jp: "1365円です。税込みです"
+},
+{
+    id: "q30",
+        text: "ブックカバーをつけてもらえますか？",
+            audio: "Can you put a book cover on this?",
+                sentence: "Certainly free of charge",
+                    answer_jp: "かしこまりました、無料です"
+},
+{
+    id: "q31",
+        text: "これらを別々の袋に入れてもらえますか？",
+            audio: "Can I have separate bags for these?",
+                sentence: "Yes certainly",
+                    answer_jp: "はい、かしこまりました"
+},
+{
+    id: "q32",
+        text: "駅はどちらですか？",
+            audio: "Which way is the station?",
+                sentence: "Go out the entrance of this building and walk to the left",
+                    answer_jp: "このビルの入り口をでて左側に向かって歩いてください"
 }
 ];
