@@ -256,7 +256,7 @@ function handleAnswer(selectedOption, clickedBtn) {
             }, 1000);
 
             // Push to retry queue
-            currentQuestions.push(qData);
+            currentQuestions.push(currentQuestions[currentQuestionIndex]);
         }
 
         updateScoreUI();
@@ -277,9 +277,9 @@ function handleTimeout() {
     const correctIndex = qData.correct;
 
     // Retry on timeout too
-    currentQuestions.push(qData);
+    currentQuestions.push(currentQuestions[currentQuestionIndex]);
 
-    feedbackMsg.textContent = "Time's Up! Correct: " + qData.sentence;
+    feedbackMsg.textContent = "Time's Up! Correct: " + currentQuestions[currentQuestionIndex].sentence;
     feedbackMsg.classList.remove('hidden', 'error');
     feedbackMsg.classList.add('error');
 
