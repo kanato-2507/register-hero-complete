@@ -453,38 +453,47 @@ body {
 }
 
 /* Feedback Message Styles */
+/* Feedback Message Container */
 .feedback {
     margin-top: 1rem;
-    padding: 1rem;
-    border-radius: 12px;
-    font-weight: 700;
-    text-align: center;
     width: 100%;
-    font-size: 1.1rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transform-origin: center;
     animation: fadeIn 0.3s ease-out;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .feedback.hidden {
     display: none;
 }
 
-.feedback.success {
+.msg-box {
+    padding: 1rem;
+    border-radius: 12px;
+    font-weight: 700;
+    text-align: center;
+    font-size: 1.2rem;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.msg-box.success {
     background: #E0F2F1;
     color: #00796B;
     border: 2px solid #A7FFEB;
-    position: relative;
     box-shadow: 0 4px 20px rgba(168, 230, 207, 0.5);
 }
 
-.feedback.error {
+.msg-box.error {
     background: #FFEBEE;
     color: #C62828;
     border: 2px solid #FFCDD2;
 }
 
-.feedback.success::before {
+.msg-box.success::before {
     content: '✨';
     position: absolute;
     font-size: 2.5rem;
@@ -494,7 +503,7 @@ body {
     transform: translateY(-50%);
 }
 
-.feedback.success::after {
+.msg-box.success::after {
     content: '✨';
     position: absolute;
     font-size: 2.5rem;

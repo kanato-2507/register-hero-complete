@@ -236,7 +236,9 @@ function checkAnswer() {
 
             // Bilingual Feedback Grid
             feedbackMsg.innerHTML = `
-                <div style="text-align:center; font-weight:bold; margin-bottom:0.5rem;">${randomMsg}</div>
+                <div class="msg-box success">
+                    ${randomMsg}
+                </div>
                 <div class="feedback-grid">
                     <div class="row question">
                         <span class="label">Customer</span>
@@ -255,8 +257,7 @@ function checkAnswer() {
                 </div>
             `;
 
-            feedbackMsg.classList.remove('hidden', 'error');
-            feedbackMsg.classList.add('success');
+            feedbackMsg.classList.remove('hidden', 'error', 'success');
 
             // Layout Toggle: Hide Pool to show Feedback
             if (document.querySelector('.word-pool')) document.querySelector('.word-pool').classList.add('hidden');
@@ -308,12 +309,11 @@ function checkAnswer() {
             finishQuestion(true);
         } else {
             // Wrong
-            feedbackMsg.textContent = "Try Again!";
-            feedbackMsg.classList.add('error');
-            feedbackMsg.classList.remove('hidden', 'success');
+            feedbackMsg.innerHTML = '<div class="msg-box error">Try Again!</div>';
+            feedbackMsg.classList.remove('hidden', 'success', 'error');
             setTimeout(() => {
                 feedbackMsg.classList.add('hidden');
-            }, 1000);
+            }, 2000);
         }
     } catch (e) {
         console.error("Check Answer Error", e);
@@ -365,7 +365,7 @@ function handleTimeout() {
 
     // Timeout Feedback
     feedbackMsg.innerHTML = `
-        <div style="text-align:center; font-weight:bold; margin-bottom:0.5rem;">Time's Up!</div>
+         <div class="msg-box error">Time's Up!</div>
          <div class="feedback-grid">
                 <div class="row answer">
                 <span class="label">Correct</span>
@@ -377,8 +377,7 @@ function handleTimeout() {
         </div>
     `;
 
-    feedbackMsg.classList.remove('hidden', 'error');
-    feedbackMsg.classList.add('error');
+    feedbackMsg.classList.remove('hidden', 'error', 'success');
 
     // Layout Toggle: Hide Pool to show Feedback
     if (document.querySelector('.word-pool')) document.querySelector('.word-pool').classList.add('hidden');

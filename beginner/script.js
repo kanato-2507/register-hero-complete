@@ -244,7 +244,9 @@ function handleAnswer(selectedOption, clickedBtn) {
 
             // Bilingual Feedback Grid
             feedbackMsg.innerHTML = `
-                <div style="text-align:center; font-weight:bold; margin-bottom:0.5rem;">${randomMsg}</div>
+                <div class="msg-box success">
+                    ${randomMsg}
+                </div>
                 <div class="feedback-grid">
                     <div class="row question">
                         <span class="label">Customer</span>
@@ -263,8 +265,9 @@ function handleAnswer(selectedOption, clickedBtn) {
                 </div>
             `;
 
-            feedbackMsg.classList.remove('hidden', 'error');
-            feedbackMsg.classList.add('success');
+            feedbackMsg.classList.remove('hidden', 'error', 'success');
+
+            // Layout Toggle: Hide Options to show Feedback
 
             // Layout Toggle: Hide Options to show Feedback
             optionsContainer.classList.add('hidden');
@@ -293,7 +296,7 @@ function handleAnswer(selectedOption, clickedBtn) {
 
             // Wrong Answer Feedback
             feedbackMsg.innerHTML = `
-                <div style="text-align:center; font-weight:bold; margin-bottom:0.5rem;">Try Again!</div>
+                <div class="msg-box error">Try Again!</div>
                 <div class="feedback-grid">
                      <div class="row answer">
                         <span class="label">Correct</span>
@@ -305,11 +308,11 @@ function handleAnswer(selectedOption, clickedBtn) {
                 </div>
             `;
 
-            feedbackMsg.classList.add('error');
-            feedbackMsg.classList.remove('hidden', 'success');
+            feedbackMsg.classList.remove('hidden', 'error', 'success');
+            // Timeout increased for readability
             setTimeout(() => {
                 feedbackMsg.classList.add('hidden');
-            }, 1000);
+            }, 4000);
 
             // Push to retry queue with retry flag
             const retryQ = { ...currentQuestions[currentQuestionIndex], isRetry: true };
@@ -339,7 +342,7 @@ function handleTimeout() {
 
     // Timeout Feedback
     feedbackMsg.innerHTML = `
-        <div style="text-align:center; font-weight:bold; margin-bottom:0.5rem;">Time's Up!</div>
+        <div class="msg-box error">Time's Up!</div>
          <div class="feedback-grid">
                 <div class="row answer">
                 <span class="label">Correct</span>
@@ -351,8 +354,7 @@ function handleTimeout() {
         </div>
     `;
 
-    feedbackMsg.classList.remove('hidden', 'error');
-    feedbackMsg.classList.add('error');
+    feedbackMsg.classList.remove('hidden', 'error', 'success');
 
     // Layout Toggle: Hide Options to show Feedback
     optionsContainer.classList.add('hidden');
