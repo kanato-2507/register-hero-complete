@@ -189,9 +189,30 @@ const MASTER_QUESTIONS = [
 },
 {
     id: "q26",
-        text: "1000円札をもう一枚ください（お会計の際）",
-            audio: "Can I have another 1000 yen bill?",
-                sentence: "Certainly",
-                    answer_jp: "かしこまりました"
+        text: "（支払いが1000円足りません）",
+            audio: "Here you go",
+                sentence: "May I have another one thousand yen bill",
+                    answer_jp: "1000円札をもう一枚いただけますか"
+},
+{
+    id: "q27",
+        text: "（支払いが1万円足りません）",
+            audio: "Here you go",
+                sentence: "May I have another ten thousand yen bill",
+                    answer_jp: "1万円札をもう一枚いただけますか"
+},
+{
+    id: "q28",
+        text: "（支払いが100円足りません）",
+            audio: "Here you go",
+                sentence: "May I have another one hundred yen coin",
+                    answer_jp: "100円玉をもう一枚いただけますか"
+},
+{
+    id: "q29",
+        text: "これいくらですか？",
+            audio: "How much is this?",
+                sentence: "It is one thousand three hundred sixty five yen tax is included",
+                    answer_jp: "1365円です。税込みです"
 }
 ];
