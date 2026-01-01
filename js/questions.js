@@ -56,7 +56,7 @@ const MASTER_QUESTIONS = [
     },
     {
         id: "q8",
-        text: "商品画像を見せて　これありますか？",
+        text: "（商品画像を見せて）これありますか？",
         audio: "Do you have this?",
         sentence: "We don't have it",
         answer_jp: "当店では取り扱っておりません"
@@ -70,7 +70,7 @@ const MASTER_QUESTIONS = [
     },
     {
         id: "q10",
-        text: "袋はいりますか？",
+        text: "袋はいりますか？（店員役として）",
         audio: "Do you need a bag?",
         sentence: "Plastic bags cost five yen",
         answer_jp: "レジ袋は5円かかります"
@@ -167,7 +167,7 @@ const MASTER_QUESTIONS = [
     // 4. Additional Scenarios
     {
         id: "q23",
-        text: "すみません",
+        text: "すみません（店員を呼ぶ）",
         audio: "Excuse me",
         sentence: "Just a moment please",
         answer_jp: "少々お待ちください"
