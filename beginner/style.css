@@ -471,7 +471,6 @@ body {
     color: #00796B;
     border: 2px solid #A7FFEB;
     position: relative;
-    overflow: hidden;
     box-shadow: 0 4px 20px rgba(168, 230, 207, 0.5);
 }
 
