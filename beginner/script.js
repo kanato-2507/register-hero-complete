@@ -52,7 +52,8 @@ function initGame() {
     currentQuestionIndex = 0;
     // Select 10 random questions from the pool
     const shuffled = [...QUESTIONS].sort(() => 0.5 - Math.random());
-    currentQuestions = shuffled.slice(0, 10);
+    // Deep clone to track isRetry independently for each game session
+    currentQuestions = shuffled.slice(0, 10).map(q => ({ ...q, isRetry: false }));
     updateScoreUI();
 
     startScreen.classList.remove('active');
@@ -216,11 +217,21 @@ function handleAnswer(selectedOption, clickedBtn) {
         // ALWAYS speak the correct answer, regardless of what was clicked
         speak(correctAnswerText);
 
-        // Score Calculation (Aligned with Intermediate)
-        // Intermediate: floor(timeLeft) * 10
-        // Beginner was: timeLeft * 10 (with decimals?)
-        const timeBonus = Math.floor(timeLeft) * 10;
-        const gainedPoints = POINTS_PER_QUESTION + timeBonus;
+        // Score Calculation (Reduced Points for Retries)
+        // If Retry: Fixed 50 points (No bonus)
+        // If First Try: 100 points + Time Bonus
+
+        let gainedPoints = 0;
+        let timeBonus = 0;
+        const currentQ = currentQuestions[currentQuestionIndex];
+
+        if (currentQ.isRetry) {
+            gainedPoints = 50;
+            timeBonus = 0; // No speed bonus for retry
+        } else {
+            timeBonus = Math.floor(timeLeft) * 10;
+            gainedPoints = POINTS_PER_QUESTION + timeBonus;
+        }
 
         if (selectedOption.isCorrect) {
             // Correct
@@ -236,7 +247,14 @@ function handleAnswer(selectedOption, clickedBtn) {
             // Score Popup
             const popup = document.createElement('div');
             popup.classList.add('score-popup');
-            popup.innerHTML = `<span style="color:#FF9EC7;">${POINTS_PER_QUESTION}</span> + <span style="color:#A8E6CF;">${timeBonus}</span>`;
+
+            if (currentQ.isRetry) {
+                // Simplified popup for retry
+                popup.innerHTML = `<span style="color:#FF9EC7;">${gainedPoints}</span>`;
+            } else {
+                popup.innerHTML = `<span style="color:#FF9EC7;">${POINTS_PER_QUESTION}</span> + <span style="color:#A8E6CF;">${timeBonus}</span>`;
+            }
+
             if (document.querySelector('.hud')) document.querySelector('.hud').appendChild(popup);
             setTimeout(() => popup.remove(), 1500);
 
@@ -255,8 +273,9 @@ function handleAnswer(selectedOption, clickedBtn) {
                 feedbackMsg.classList.add('hidden');
             }, 1000);
 
-            // Push to retry queue
-            currentQuestions.push(currentQuestions[currentQuestionIndex]);
+            // Push to retry queue with retry flag
+            const retryQ = { ...currentQuestions[currentQuestionIndex], isRetry: true };
+            currentQuestions.push(retryQ);
         }
 
         updateScoreUI();
@@ -277,7 +296,8 @@ function handleTimeout() {
     const correctIndex = qData.correct;
 
     // Retry on timeout too
-    currentQuestions.push(currentQuestions[currentQuestionIndex]);
+    const retryQ = { ...currentQuestions[currentQuestionIndex], isRetry: true };
+    currentQuestions.push(retryQ);
 
     feedbackMsg.textContent = "Time's Up! Correct: " + currentQuestions[currentQuestionIndex].sentence;
     feedbackMsg.classList.remove('hidden', 'error');
@@ -312,17 +332,69 @@ function showResults() {
 
     finalScoreDisplay.textContent = score;
 
-    // Rank Logic
+    // High Score Logic
+    const highScoreKey = 'highScore_beginner';
+    const currentHigh = parseInt(localStorage.getItem(highScoreKey)) || 0;
+
+    // Create or find high score element
+    let highScoreEl = document.getElementById('high-score-display');
+    if (!highScoreEl) {
+        highScoreEl = document.createElement('div');
+        highScoreEl.id = 'high-score-display';
+        highScoreEl.style.fontSize = "1.2rem";
+        highScoreEl.style.color = "#FF9EC7";
+        highScoreEl.style.marginBottom = "1rem";
+        finalScoreDisplay.parentNode.insertBefore(highScoreEl, finalScoreDisplay.nextSibling);
+    }
+
+    if (score > currentHigh) {
+        localStorage.setItem(highScoreKey, score);
+        highScoreEl.innerHTML = `🏆 New Record! ${score}`;
+        highScoreEl.style.animation = "pulse 1s infinite";
+    } else {
+        highScoreEl.textContent = `Best: ${currentHigh}`;
+        highScoreEl.style.animation = "none";
+    }
+
+
+
+    // Rank Logic & Badges
     let rank = "Part-timer";
-    const maxScore = currentQuestions.length * (POINTS_PER_QUESTION + (GAME_DURATION_PER_QUESTION * 10));
+    let badge = "🔰"; // Beginner
+    const maxScore = 10 * (POINTS_PER_QUESTION + (GAME_DURATION_PER_QUESTION * 10)); // Theoretical Max
     const percentage = score / maxScore;
 
-    if (percentage > 0.9) rank = "Store Manager (店長)";
-    else if (percentage > 0.7) rank = "Shift Leader (バイトリーダー)";
-    else if (percentage > 0.4) rank = "Regular Staff (正社員)";
-    else rank = "Newbie (新人)";
+    if (percentage > 0.9) { rank = "Store Manager (店長)"; badge = "👑"; }
+    else if (percentage > 0.7) { rank = "Shift Leader (バイトリーダー)"; badge = "🥈"; }
+    else if (percentage > 0.4) { rank = "Regular Staff (正社員)"; badge = "🥉"; }
+    else { rank = "Newbie (新人)"; badge = "🔰"; }
 
-    rankDisplay.textContent = `Rank: ${rank}`;
+    rankDisplay.innerHTML = `<span style="font-size: 2rem;">${badge}</span><br>Rank: ${rank}`;
+
+    // Perfect Clear Stamp
+    // Check if any retry occurred (isRetry in currentQuestions history?)
+    // Actually, simple way: if score is very high? No, Reduced points handles that.
+    // If user never retried, they hit max potential.
+    // Let's rely on percentage or just check if score >= max possible for NO retries?
+    // Actually, let's look at the original questions. If currentQuestions.length == 10, no retries occurred!
+
+    // Check functionality:
+    const retriesOccurred = currentQuestions.length > 10;
+
+    if (!retriesOccurred && score > 0) {
+        let stamp = document.getElementById('perfect-stamp');
+        if (!stamp) {
+            stamp = document.createElement('div');
+            stamp.id = 'perfect-stamp';
+            stamp.className = 'perfect-stamp';
+            stamp.textContent = "PERFECT!!";
+            resultScreen.querySelector('.hud').appendChild(stamp);
+        }
+        // Stamp Animation controlled by CSS
+    } else {
+        const stamp = document.getElementById('perfect-stamp');
+        if (stamp) stamp.remove();
+    }
 }
 
 // Event Listeners

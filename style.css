@@ -137,3 +137,86 @@ body {
         max-width: 350px;
     }
 }
+
+.card {
+    position: relative;
+    /* Ensure badges position absolute */
+}
+
+.high-score-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA000 100%);
+    color: #FFF;
+    padding: 0.4rem 0.8rem;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 10px rgba(255, 160, 0, 0.4);
+    border: 3px solid #FFF;
+    animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    white-space: nowrap;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    transform-origin: center;
+    z-index: 100;
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0) rotate(-10deg);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(1.1) rotate(5deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
+}
+
+/* Perfect Stamp Style */
+.perfect-stamp {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-15deg);
+    font-size: 3rem;
+    font-weight: 900;
+    color: #FF0055;
+    border: 5px solid #FF0055;
+    padding: 0.5rem 2rem;
+    border-radius: 10px;
+    opacity: 0;
+    animation: stampFall 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    z-index: 50;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.9);
+    letter-spacing: 2px;
+}
+
+.perfect-stamp::after {
+    content: '★';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    font-size: 2rem;
+    color: #FFD700;
+    filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.2));
+}
+
+@keyframes stampFall {
+    0% {
+        transform: translate(-50%, -50%) scale(3) rotate(0);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1) rotate(-15deg);
+        opacity: 1;
+    }
+}

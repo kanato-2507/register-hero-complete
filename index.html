@@ -46,9 +46,30 @@
                     英語の語順感覚を身につけよう。
                 </p>
                 <div class="tag manager">Intermediate</div>
+                <div class="tag manager">Intermediate</div>
             </a>
         </div>
     </div>
-</body>
+
+    <script>
+        // Inject High Scores
+        document.addEventListener('DOMContentLoaded', () => {
+            const beginnerScore = localStorage.getItem('highScore_beginner');
+            if (beginnerScore) {
+                const badge = document.createElement('div');
+                badge.className = 'high-score-badge';
+                badge.textContent = `🏆 Best: ${beginnerScore}`;
+                document.querySelector('a[href*="beginner"]').appendChild(badge);
+            }
+
+            const intermediateScore = localStorage.getItem('highScore_intermediate');
+            if (intermediateScore) {
+                const badge = document.createElement('div');
+                badge.className = 'high-score-badge';
+                badge.textContent = `🏆 Best: ${intermediateScore}`;
+                document.querySelector('a[href*="intermediate"]').appendChild(badge);
+            }
+        });
+    </script>
 
 </html>

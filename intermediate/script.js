@@ -68,13 +68,15 @@ function initGame() {
     score = 0;
     currentQuestionIndex = 0;
     // Select 10 random questions from the pool
+    // Select 10 random questions from the pool
     // Fisher-Yates Shuffle for better randomness
     const shuffled = [...QUESTIONS];
     for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
-    currentQuestions = shuffled.slice(0, 10);
+    // Deep clone to track isRetry independently
+    currentQuestions = shuffled.slice(0, 10).map(q => ({ ...q, isRetry: false }));
     updateScoreUI();
 
     // Check Audio Support and Warn if missing
@@ -239,17 +241,34 @@ function checkAnswer() {
             });
 
             // Calculate Score
+            // Calculate Score
             // User request: Round down to integer seconds (ignore decimals)
             // e.g. 9.1s -> 9s -> 90 points
-            const timeBonus = Math.floor(timeLeft) * 10;
-            const gainedPoints = POINTS_PER_QUESTION + timeBonus;
+            // Logic Change: Reduced Points for Retries
+
+            let gainedPoints = 0;
+            let timeBonus = 0;
+
+            if (qData.isRetry) {
+                gainedPoints = 50;
+                timeBonus = 0;
+            } else {
+                timeBonus = Math.floor(timeLeft) * 10;
+                gainedPoints = POINTS_PER_QUESTION + timeBonus;
+            }
+
             score += gainedPoints;
 
             // Score Popup logic
             const popup = document.createElement('div');
             popup.classList.add('score-popup');
-            // User request: Show "100 + 90" style
-            popup.innerHTML = `<span style="color:#FF9EC7;">${POINTS_PER_QUESTION}</span> + <span style="color:#A8E6CF;">${timeBonus}</span>`;
+
+            if (qData.isRetry) {
+                popup.innerHTML = `<span style="color:#FF9EC7;">${gainedPoints}</span>`;
+            } else {
+                popup.innerHTML = `<span style="color:#FF9EC7;">${POINTS_PER_QUESTION}</span> + <span style="color:#A8E6CF;">${timeBonus}</span>`;
+            }
+
             document.querySelector('.hud').appendChild(popup);
             setTimeout(() => popup.remove(), 1500);
 
@@ -281,8 +300,10 @@ function finishQuestion(isCorrect) {
     clearBtn.classList.add('hidden'); // Hide reset
 
     // If wrong or timeout, add question back to queue
+    // If wrong or timeout, add question back to queue
     if (!isCorrect) {
-        const qData = currentQuestions[currentQuestionIndex];
+        // Flag for retry
+        const qData = { ...currentQuestions[currentQuestionIndex], isRetry: true };
         // Add to end of queue for retry
         currentQuestions.push(qData);
     }
@@ -304,6 +325,14 @@ function startTimer() {
 
 function handleTimeout() {
     // Timeout = wrong answer, will retry
+    // Make sure we flag it before calling finishQuestion
+    // Actually finishQuestion handles the push if isCorrect is false.
+    // BUT we need to ensure the object PUSHED is the retry version.
+
+    // finishQuestion logic uses currentQuestionIndex which points to current OLD question.
+    // So we need to modify the push logic inside finishQuestion, which we did above.
+    // Wait, finishQuestion reads from array again.
+
     feedbackMsg.textContent = "Time's Up! Correct: " + currentQuestions[currentQuestionIndex].sentence;
     feedbackMsg.classList.remove('hidden', 'error');
     feedbackMsg.classList.remove('hidden', 'error');
@@ -326,8 +355,61 @@ function showResults() {
     resultScreen.classList.remove('hidden');
     setTimeout(() => resultScreen.classList.add('active'), 50);
     finalScoreDisplay.textContent = score;
-    // Rank logic...
-    rankDisplay.textContent = `Score: ${score}`;
+
+    // High Score Logic
+    const highScoreKey = 'highScore_intermediate';
+    const currentHigh = parseInt(localStorage.getItem(highScoreKey)) || 0;
+
+    // Create or find high score element
+    let highScoreEl = document.getElementById('high-score-display');
+    if (!highScoreEl) {
+        highScoreEl = document.createElement('div');
+        highScoreEl.id = 'high-score-display';
+        highScoreEl.style.fontSize = "1.2rem";
+        highScoreEl.style.color = "#FF9EC7";
+        highScoreEl.style.marginBottom = "1rem";
+        finalScoreDisplay.parentNode.insertBefore(highScoreEl, finalScoreDisplay.nextSibling);
+    }
+
+    if (score > currentHigh) {
+        localStorage.setItem(highScoreKey, score);
+        highScoreEl.innerHTML = `🏆 New Record! ${score}`;
+        highScoreEl.style.animation = "pulse 1s infinite";
+    } else {
+        highScoreEl.textContent = `Best: ${currentHigh}`;
+        highScoreEl.style.animation = "none";
+    }
+
+    // Rank Logic & Badges
+    let rank = "Part-timer";
+    let badge = "🔰";
+    const maxScore = 10 * (POINTS_PER_QUESTION + (GAME_DURATION_PER_QUESTION * 10)); // Theoretical Max
+    const percentage = score / maxScore;
+
+    if (percentage > 0.9) { rank = "Store Manager (店長)"; badge = "👑"; }
+    else if (percentage > 0.7) { rank = "Shift Leader (バイトリーダー)"; badge = "🥈"; }
+    else if (percentage > 0.4) { rank = "Regular Staff (正社員)"; badge = "🥉"; }
+    else { rank = "Newbie (新人)"; badge = "🔰"; }
+
+    rankDisplay.innerHTML = `<span style="font-size: 2rem;">${badge}</span><br>Rank: ${rank}`;
+
+    // Perfect Clear Stamp
+    // Check if any retry occurred by checking length of history
+    const retriesOccurred = currentQuestions.length > 10;
+
+    if (!retriesOccurred && score > 0) {
+        let stamp = document.getElementById('perfect-stamp');
+        if (!stamp) {
+            stamp = document.createElement('div');
+            stamp.id = 'perfect-stamp';
+            stamp.className = 'perfect-stamp';
+            stamp.textContent = "PERFECT!!";
+            resultScreen.querySelector('.hud').appendChild(stamp);
+        }
+    } else {
+        const stamp = document.getElementById('perfect-stamp');
+        if (stamp) stamp.remove();
+    }
 }
 
 // Events
