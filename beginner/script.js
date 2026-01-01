@@ -103,6 +103,7 @@ function loadQuestion() {
     // UI Update
     questionText.textContent = qData.text;
     optionsContainer.innerHTML = '';
+    optionsContainer.classList.remove('hidden'); // Show options
     nextBtnContainer.classList.add('hidden'); // Hide Next button
     feedbackMsg.classList.add('hidden');
     feedbackMsg.className = 'feedback hidden'; // Reset classes
@@ -265,6 +266,9 @@ function handleAnswer(selectedOption, clickedBtn) {
             feedbackMsg.classList.remove('hidden', 'error');
             feedbackMsg.classList.add('success');
 
+            // Layout Toggle: Hide Options to show Feedback
+            optionsContainer.classList.add('hidden');
+
             // Score Popup
             const popup = document.createElement('div');
             popup.classList.add('score-popup');
@@ -349,6 +353,9 @@ function handleTimeout() {
 
     feedbackMsg.classList.remove('hidden', 'error');
     feedbackMsg.classList.add('error');
+
+    // Layout Toggle: Hide Options to show Feedback
+    optionsContainer.classList.add('hidden');
 
     // Find correct button visually
     const allButtons = document.querySelectorAll('.option-btn');

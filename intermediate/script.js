@@ -128,6 +128,7 @@ function loadQuestion() {
     checkBtn.disabled = true;
     feedbackMsg.classList.add('hidden');
     feedbackMsg.className = 'feedback hidden'; // reset error class
+    if (document.querySelector('.word-pool')) document.querySelector('.word-pool').classList.remove('hidden'); // Show pool
 
     // Prepare Words
     // Remove punctuation for easier matching, or keep it?
@@ -257,6 +258,9 @@ function checkAnswer() {
             feedbackMsg.classList.remove('hidden', 'error');
             feedbackMsg.classList.add('success');
 
+            // Layout Toggle: Hide Pool to show Feedback
+            if (document.querySelector('.word-pool')) document.querySelector('.word-pool').classList.add('hidden');
+
             // Animate word cards
             document.querySelectorAll('.answer-box .word-card').forEach(card => {
                 card.classList.add('success');
@@ -375,6 +379,9 @@ function handleTimeout() {
 
     feedbackMsg.classList.remove('hidden', 'error');
     feedbackMsg.classList.add('error');
+
+    // Layout Toggle: Hide Pool to show Feedback
+    if (document.querySelector('.word-pool')) document.querySelector('.word-pool').classList.add('hidden');
     speak(currentQuestions[currentQuestionIndex].sentence);
     finishQuestion(false); // Mark as incorrect to trigger retry
 }
