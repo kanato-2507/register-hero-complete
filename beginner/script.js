@@ -28,6 +28,13 @@ const optionsContainer = document.getElementById('options-container');
 const replayBtn = document.getElementById('replay-btn');
 const nextBtnContainer = document.getElementById('next-btn-container'); // NEW
 const questionCounter = document.getElementById('question-counter'); // NEW
+const feedbackMsg = document.getElementById('feedback-msg'); // NEW
+
+// Encouragement Messages
+const ENCOURAGEMENT = [
+    "完璧！🎉", "素晴らしい！⭐", "すごい！🌟", "よくできました！💯",
+    "最高！✨", "その調子！🔥", "天才！💎", "パーフェクト！🏆"
+];
 
 const finalScoreDisplay = document.getElementById('final-score-display');
 const rankDisplay = document.getElementById('rank-display');
@@ -96,6 +103,10 @@ function loadQuestion() {
     questionText.textContent = qData.text;
     optionsContainer.innerHTML = '';
     nextBtnContainer.classList.add('hidden'); // Hide Next button
+    feedbackMsg.classList.add('hidden');
+    feedbackMsg.className = 'feedback hidden'; // Reset classes
+    feedbackMsg.classList.add('hidden');
+    feedbackMsg.className = 'feedback hidden'; // Reset classes
 
 
 
@@ -214,6 +225,12 @@ function handleAnswer(selectedOption, clickedBtn) {
             clickedBtn.classList.add('correct');
             score += gainedPoints;
 
+            // Feedback Message
+            const randomMsg = ENCOURAGEMENT[Math.floor(Math.random() * ENCOURAGEMENT.length)];
+            feedbackMsg.textContent = randomMsg;
+            feedbackMsg.classList.remove('hidden', 'error');
+            feedbackMsg.classList.add('success');
+
             // Score Popup
             const popup = document.createElement('div');
             popup.classList.add('score-popup');
@@ -228,6 +245,13 @@ function handleAnswer(selectedOption, clickedBtn) {
             // Wrong
             clickedBtn.classList.add('wrong');
             if (correctBtn) correctBtn.classList.add('correct'); // Show correct answer
+
+            feedbackMsg.textContent = "Try Again!";
+            feedbackMsg.classList.add('error');
+            feedbackMsg.classList.remove('hidden', 'success');
+            setTimeout(() => {
+                feedbackMsg.classList.add('hidden');
+            }, 1000);
 
             // Push to retry queue
             currentQuestions.push(qData);
@@ -252,6 +276,10 @@ function handleTimeout() {
 
     // Retry on timeout too
     currentQuestions.push(qData);
+
+    feedbackMsg.textContent = "Time's Up! Correct: " + qData.sentence;
+    feedbackMsg.classList.remove('hidden', 'error');
+    feedbackMsg.classList.add('error');
 
     // Find correct button visually
     const allButtons = document.querySelectorAll('.option-btn');
