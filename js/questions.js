@@ -188,22 +188,22 @@ const MASTER_QUESTIONS = [
     },
     {
         id: "q26",
-        text: "支払いが1000円足りません",
-        audio: "Here you go",
+        text: "Here you are.",
+        audio: "Here you are",
         sentence: "May I have another one thousand yen bill",
         answer_jp: "1000円札をもう一枚いただけますか"
     },
     {
         id: "q27",
-        text: "支払いが1万円足りません",
-        audio: "Here you go",
+        text: "Here you are.",
+        audio: "Here you are",
         sentence: "May I have another ten thousand yen bill",
         answer_jp: "1万円札をもう一枚いただけますか"
     },
     {
         id: "q28",
-        text: "支払いが100円足りません",
-        audio: "Here you go",
+        text: "Here you are.",
+        audio: "Here you are",
         sentence: "May I have another one hundred yen coin",
         answer_jp: "100円玉をもう一枚いただけますか"
     },
