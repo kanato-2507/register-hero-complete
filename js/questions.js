@@ -162,78 +162,77 @@ const MASTER_QUESTIONS = [
         audio: "Can I take a picture?",
         sentence: "Please refrain from taking pictures",
         answer_jp: "撮影はご遠慮ください"
-    }
     },
 
-// 4. Additional Scenarios
-{
-    id: "q23",
+    // 4. Additional Scenarios
+    {
+        id: "q23",
         text: "すみません（店員を呼ぶ）",
-            audio: "Excuse me",
-                sentence: "Just a moment please",
-                    answer_jp: "少々お待ちください"
-},
-{
-    id: "q24",
+        audio: "Excuse me",
+        sentence: "Just a moment please",
+        answer_jp: "少々お待ちください"
+    },
+    {
+        id: "q24",
         text: "案内してください",
-            audio: "Can you show me where it is?",
-                sentence: "Right this way please",
-                    answer_jp: "こちらです"
-},
-{
-    id: "q25",
+        audio: "Can you show me where it is?",
+        sentence: "Right this way please",
+        answer_jp: "こちらです"
+    },
+    {
+        id: "q25",
         text: "クレジットカードのタッチ決済できますか",
-            audio: "Can I use contactless payment?",
-                sentence: "Yes you can",
-                    answer_jp: "できます"
-},
-{
-    id: "q26",
+        audio: "Can I use contactless payment?",
+        sentence: "Yes you can",
+        answer_jp: "できます"
+    },
+    {
+        id: "q26",
         text: "（支払いが1000円足りません）",
-            audio: "Here you go",
-                sentence: "May I have another one thousand yen bill",
-                    answer_jp: "1000円札をもう一枚いただけますか"
-},
-{
-    id: "q27",
+        audio: "Here you go",
+        sentence: "May I have another one thousand yen bill",
+        answer_jp: "1000円札をもう一枚いただけますか"
+    },
+    {
+        id: "q27",
         text: "（支払いが1万円足りません）",
-            audio: "Here you go",
-                sentence: "May I have another ten thousand yen bill",
-                    answer_jp: "1万円札をもう一枚いただけますか"
-},
-{
-    id: "q28",
+        audio: "Here you go",
+        sentence: "May I have another ten thousand yen bill",
+        answer_jp: "1万円札をもう一枚いただけますか"
+    },
+    {
+        id: "q28",
         text: "（支払いが100円足りません）",
-            audio: "Here you go",
-                sentence: "May I have another one hundred yen coin",
-                    answer_jp: "100円玉をもう一枚いただけますか"
-},
-{
-    id: "q29",
+        audio: "Here you go",
+        sentence: "May I have another one hundred yen coin",
+        answer_jp: "100円玉をもう一枚いただけますか"
+    },
+    {
+        id: "q29",
         text: "これいくらですか？",
-            audio: "How much is this?",
-                sentence: "It is one thousand three hundred sixty five yen tax is included",
-                    answer_jp: "1365円です。税込みです"
-},
-{
-    id: "q30",
+        audio: "How much is this?",
+        sentence: "It is one thousand three hundred sixty five yen tax is included",
+        answer_jp: "1365円です。税込みです"
+    },
+    {
+        id: "q30",
         text: "ブックカバーをつけてもらえますか？",
-            audio: "Can you put a book cover on this?",
-                sentence: "Certainly free of charge",
-                    answer_jp: "かしこまりました、無料です"
-},
-{
-    id: "q31",
+        audio: "Can you put a book cover on this?",
+        sentence: "Certainly free of charge",
+        answer_jp: "かしこまりました、無料です"
+    },
+    {
+        id: "q31",
         text: "これらを別々の袋に入れてもらえますか？",
-            audio: "Can I have separate bags for these?",
-                sentence: "Yes certainly",
-                    answer_jp: "はい、かしこまりました"
-},
-{
-    id: "q32",
+        audio: "Can I have separate bags for these?",
+        sentence: "Yes certainly",
+        answer_jp: "はい、かしこまりました"
+    },
+    {
+        id: "q32",
         text: "駅はどちらですか？",
-            audio: "Which way is the station?",
-                sentence: "Go out the entrance of this building and walk to the left",
-                    answer_jp: "このビルの入り口をでて左側に向かって歩いてください"
-}
+        audio: "Which way is the station?",
+        sentence: "Go out the entrance of this building and walk to the left",
+        answer_jp: "このビルの入り口をでて左側に向かって歩いてください"
+    }
 ];
