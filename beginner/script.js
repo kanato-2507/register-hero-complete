@@ -312,7 +312,7 @@ function handleAnswer(selectedOption, clickedBtn) {
             // Timeout increased for readability
             setTimeout(() => {
                 feedbackMsg.classList.add('hidden');
-            }, 4000);
+            }, 8000);
 
             // Push to retry queue with retry flag
             const retryQ = { ...currentQuestions[currentQuestionIndex], isRetry: true };
