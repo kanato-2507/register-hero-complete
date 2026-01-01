@@ -131,6 +131,7 @@ const questionText = document.getElementById('question-text');
 const optionsContainer = document.getElementById('options-container');
 const replayBtn = document.getElementById('replay-btn');
 const nextBtnContainer = document.getElementById('next-btn-container'); // NEW
+const questionCounter = document.getElementById('question-counter'); // NEW
 
 const finalScoreDisplay = document.getElementById('final-score-display');
 const rankDisplay = document.getElementById('rank-display');
@@ -177,6 +178,19 @@ function loadQuestion() {
     questionText.textContent = qData.text;
     optionsContainer.innerHTML = '';
     nextBtnContainer.classList.add('hidden'); // Hide Next button
+
+    // Retry Mode & Counter Logic
+    const initialTotal = 10;
+    const isRetry = currentQuestionIndex >= initialTotal;
+    const appContainer = document.querySelector('.app-container');
+
+    if (isRetry) {
+        appContainer.classList.add('retry-mode');
+        questionCounter.textContent = `${currentQuestionIndex + 1}/${initialTotal}`;
+    } else {
+        appContainer.classList.remove('retry-mode');
+        questionCounter.textContent = `${currentQuestionIndex + 1}/${initialTotal}`;
+    }
 
     // Create Buttons with Robust Shuffle
     const shuffledOptions = qData.options.map((opt, index) => ({ text: opt, originalIndex: index }));
@@ -255,16 +269,31 @@ function handleAnswer(selectedIndex, answerText, clickedBtn) {
     // ALWAYS speak the correct answer, regardless of what was clicked
     speak(correctAnswerText);
 
+    const bonus = Math.ceil(timeLeft * 10);
+    const gainedPoints = POINTS_PER_QUESTION + bonus;
+
     if (selectedIndex === correctIndex) {
         // Correct
         clickedBtn.classList.add('correct');
-        score += Math.ceil(POINTS_PER_QUESTION + (timeLeft * 10)); // Speed bonus
-        const sfx = new AudioContext(); // Placeholder for sound if needed later
-        // Visualize success
+        score += gainedPoints;
+
+        // Score Popup
+        const popup = document.createElement('div');
+        popup.classList.add('score-popup');
+        popup.innerHTML = `<span style="color:#FF9EC7;">${POINTS_PER_QUESTION}</span> + <span style="color:#A8E6CF;">${bonus}</span>`;
+        if (document.querySelector('.hud')) document.querySelector('.hud').appendChild(popup);
+        setTimeout(() => popup.remove(), 1500);
+
+        scoreDisplay.classList.add('animate');
+        setTimeout(() => scoreDisplay.classList.remove('animate'), 500);
+
     } else {
         // Wrong
         clickedBtn.classList.add('wrong');
         if (correctBtn) correctBtn.classList.add('correct'); // Show correct answer
+
+        // Push to retry queue
+        currentQuestions.push(qData);
     }
 
     updateScoreUI();
@@ -277,6 +306,9 @@ function handleTimeout() {
     isAnswering = true;
     const qData = currentQuestions[currentQuestionIndex];
     const correctIndex = qData.correct;
+
+    // Retry on timeout too
+    currentQuestions.push(qData);
 
     // Find correct button visually
     const allButtons = document.querySelectorAll('.option-btn');
