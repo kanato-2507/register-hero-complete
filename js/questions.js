@@ -130,17 +130,17 @@ const MASTER_QUESTIONS = [
         id: "q18",
         text: "トイレはどこですか？",
         audio: "Where is the restroom?",
-        sentence: "The restroom is next to the elevator",
-        answer_jp: "お手洗いはエレベーターの隣にございます"
+        sentence: "Go out of the store walk left down the aisle and turn left again at the end",
+        answer_jp: "店を出て通路を左に歩いて、突き当りをもう一度左です"
     },
 
     // 3. Tourist Specific
     {
         id: "q19",
-        text: "日本語の地図はありますか？",
-        audio: "Do you have a map in Japanese?",
-        sentence: "Yes we have maps at the counter",
-        answer_jp: "はい、カウンターに地図がございます"
+        text: "英語の小説はありますか？",
+        audio: "Do you have English novels?",
+        sentence: "Yes they are by pillar eleven in the back right",
+        answer_jp: "あります。お店の右側奥の11番の柱のところにございます"
     },
     {
         id: "q20",
@@ -160,7 +160,38 @@ const MASTER_QUESTIONS = [
         id: "q22",
         text: "写真を撮ってもいいですか？",
         audio: "Can I take a picture?",
-        sentence: "Please refrain from taking pictures of magazines",
-        answer_jp: "雑誌の撮影はご遠慮ください"
+        sentence: "Please refrain from taking pictures",
+        answer_jp: "撮影はご遠慮ください"
     }
+    },
+
+// 4. Additional Scenarios
+{
+    id: "q23",
+        text: "すみません（店員を呼ぶ）",
+            audio: "Excuse me",
+                sentence: "Just a moment please",
+                    answer_jp: "少々お待ちください"
+},
+{
+    id: "q24",
+        text: "案内してください",
+            audio: "Can you show me where it is?",
+                sentence: "Right this way please",
+                    answer_jp: "こちらです"
+},
+{
+    id: "q25",
+        text: "クレジットカードのタッチ決済できますか",
+            audio: "Can I use contactless payment?",
+                sentence: "Yes you can",
+                    answer_jp: "できます"
+},
+{
+    id: "q26",
+        text: "1000円札をもう一枚ください（お会計の際）",
+            audio: "Can I have another 1000 yen bill?",
+                sentence: "Certainly",
+                    answer_jp: "かしこまりました"
+}
 ];
