@@ -67,7 +67,7 @@ body {
     pointer-events: none;
     transform: scale(0.95);
     /* Increase padding bottom to accommodate fixed buttons */
-    padding-bottom: 150px;
+    padding-bottom: 220px;
     overflow-y: scroll;
     /* Allow scrolling */
     -webkit-overflow-scrolling: touch;
@@ -91,13 +91,24 @@ body {
 }
 
 .next-btn-area {
-    margin-top: 2rem;
+    margin-top: 0;
+    width: 100%;
+    max-width: 500px;
+    /* Match app container */
     display: flex;
     justify-content: center;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    padding: 1rem 2rem;
+    background: linear-gradient(to top, rgba(255, 255, 255, 1) 90%, rgba(255, 255, 255, 0));
+    box-sizing: border-box;
 }
 
 .next-btn-area.hidden {
-    display: none;
+    display: none !important;
 }
 
 .screen.hidden {
