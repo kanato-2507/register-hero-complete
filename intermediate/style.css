@@ -66,11 +66,21 @@ body {
     opacity: 0;
     pointer-events: none;
     transform: scale(0.95);
-    /* Increase padding bottom to accommodate fixed buttons */
-    padding-bottom: 220px;
+    transform: scale(0.95);
+    /* padding-bottom doesn't always work on flex containers in all browsers 
+       Use ::after pseudo-element instead */
+    padding-bottom: 0;
     overflow-y: scroll;
     /* Allow scrolling */
     -webkit-overflow-scrolling: touch;
+}
+
+.screen::after {
+    content: "";
+    display: block;
+    min-height: 250px;
+    width: 100%;
+    flex-shrink: 0;
 }
 
 @media (max-width: 600px) {
