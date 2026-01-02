@@ -68,8 +68,11 @@ body {
     pointer-events: none;
     transform: scale(0.95);
     padding-bottom: 20px;
-    overflow: hidden;
-    /* Prevent full screen scroll, manage internal scroll */
+    transform: scale(0.95);
+    padding-bottom: 20px;
+    overflow-y: auto;
+    /* Allow scrolling */
+    -webkit-overflow-scrolling: touch;
 }
 
 @media (max-width: 600px) {
@@ -340,10 +343,10 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    overflow: hidden;
-    /* Don't scroll the wrapper */
-    min-height: 0;
     flex: 1;
+    min-height: 200px;
+    /* Ensure minimum space for builder */
+    overflow: visible;
 }
 
 .label {
