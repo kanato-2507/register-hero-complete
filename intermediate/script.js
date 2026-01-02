@@ -165,6 +165,12 @@ function renderUI() {
     // Capturing initial shuffle order would be better.
     // For now, let's just filter unselected items.
 
+    // Fail-safe: Ensure action area (buttons) matches visibility expectation
+    // If not in feedback mode (nextBtn hidden), ensure action area is visible
+    if (nextBtn.classList.contains('hidden') && document.querySelector('.action-area')) {
+        document.querySelector('.action-area').classList.remove('hidden');
+    }
+
     const unselectedWords = currentWords.filter(w => !w.selected);
     // Shuffle only on first load? Nay, shuffle always looks cleaner.
     // Ideally we shuffle ONCE per question.

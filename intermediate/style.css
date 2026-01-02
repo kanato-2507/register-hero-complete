@@ -55,7 +55,8 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    /* Force 100dvh to occupy full viewport */
+    height: 100dvh;
     padding: 2rem;
     display: flex;
     flex-direction: column;
@@ -65,10 +66,9 @@ body {
     opacity: 0;
     pointer-events: none;
     transform: scale(0.95);
-    padding-bottom: 20px;
-    transform: scale(0.95);
-    padding-bottom: 20px;
-    overflow-y: auto;
+    /* Increase padding bottom to accommodate fixed buttons */
+    padding-bottom: 150px;
+    overflow-y: scroll;
     /* Allow scrolling */
     -webkit-overflow-scrolling: touch;
 }
@@ -419,16 +419,23 @@ body {
 /* Actions */
 .action-area {
     width: 100%;
+    max-width: 500px;
+    /* Match app container */
     display: flex;
     justify-content: space-between;
     gap: 10px;
-    margin-top: 0.5rem;
-    position: sticky;
+    margin-top: 0;
+    position: fixed;
+    /* Use fixed to guarantee visibility at bottom */
     bottom: 0;
-    z-index: 100;
-    padding: 1rem 0;
-    background: linear-gradient(to top, rgba(255, 255, 255, 1) 80%, rgba(255, 255, 255, 0));
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    padding: 1rem 2rem;
+    /* Add horizontal padding */
+    background: linear-gradient(to top, rgba(255, 255, 255, 1) 90%, rgba(255, 255, 255, 0));
     flex-shrink: 0;
+    box-sizing: border-box;
 }
 
 .hidden {
