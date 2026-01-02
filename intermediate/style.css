@@ -68,22 +68,24 @@ body {
     transform: scale(0.95);
     transform: scale(0.95);
     transform: scale(0.95);
-    /* Reverting to standard flex behavior, spacer div will handle height */
-    padding-bottom: 0;
+    /* Belt and Suspenders: Padding + Spacer */
+    padding-bottom: 300px !important;
     overflow-y: scroll;
     /* Allow scrolling */
     -webkit-overflow-scrolling: touch;
 }
 
 .scroll-spacer {
-    display: block;
+    display: block !important;
     width: 100%;
-    min-height: 300px;
-    flex: 0 0 300px;
+    height: 300px !important;
+    min-height: 300px !important;
+    flex: 0 0 300px !important;
     background: transparent;
     pointer-events: none;
-    order: 999;
+    order: 9999;
     /* Ensure it stays at the bottom */
+    visibility: visible;
 }
 
 @media (max-width: 600px) {
