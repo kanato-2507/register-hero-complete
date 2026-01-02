@@ -431,7 +431,7 @@ body {
 
 /* Feedback */
 .feedback {
-    margin-top: 1rem;
+    margin-top: 2rem;
     width: 100%;
     animation: fadeIn 0.3s ease-out;
     background: transparent;
