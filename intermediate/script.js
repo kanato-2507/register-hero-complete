@@ -448,7 +448,7 @@ function showResults() {
     else if (percentage > 0.4) { rank = "Regular Staff (正社員)"; badge = "🥉"; }
     else { rank = "Newbie (新人)"; badge = "🔰"; }
 
-    rankDisplay.innerHTML = `< span style = "font-size: 2rem;" > ${badge}</span > <br>Rank: ${rank}`;
+    rankDisplay.innerHTML = `<span style="font-size: 2rem;">${badge}</span><br>Rank: ${rank}`;
 
     // Perfect Clear Stamp
     // Check if any retry occurred by checking length of history
