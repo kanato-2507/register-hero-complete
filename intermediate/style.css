@@ -60,7 +60,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
+    gap: 0.5rem;
     transition: opacity 0.3s ease, transform 0.3s ease;
     opacity: 0;
     pointer-events: none;
@@ -340,7 +340,7 @@ body {
     gap: 1rem;
     /* Don't shrink, let it grow to fit content */
     flex: 0 0 auto;
-    min-height: 200px;
+    min-height: auto;
     overflow: visible;
 }
 
@@ -431,7 +431,7 @@ body {
 
 /* Feedback */
 .feedback {
-    margin-top: 2rem;
+    margin-top: 0.5rem;
     width: 100%;
     animation: fadeIn 0.3s ease-out;
     background: transparent;
