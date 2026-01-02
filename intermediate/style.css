@@ -68,24 +68,48 @@ body {
     transform: scale(0.95);
     transform: scale(0.95);
     transform: scale(0.95);
-    /* Belt and Suspenders: Padding + Spacer */
-    padding-bottom: 300px !important;
-    overflow-y: scroll;
-    /* Allow scrolling */
+    transform: scale(0.95);
+    /* Flexbox Layout Refactor */
+    padding: 0 !important;
+    padding-bottom: 0 !important;
+    overflow: hidden;
+    /* Important: Container doesn't scroll */
+}
+
+/* New Wrappers */
+.content-scroll-wrapper {
+    flex: 1;
+    /* Take all available space */
+    width: 100%;
+    overflow-y: auto;
+    /* Handle scrolling here */
     -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    padding-bottom: 1rem;
+    gap: 0.5rem;
+}
+
+.fixed-footer {
+    flex: 0 0 auto;
+    /* Height determined by content */
+    width: 100%;
+    max-width: 500px;
+    /* Match app container */
+    background: linear-gradient(to top, rgba(255, 255, 255, 1) 90%, rgba(255, 255, 255, 0));
+    z-index: 100;
+    padding: 1rem 2rem;
+    /* Horizontal padding matching screen */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-sizing: border-box;
 }
 
 .scroll-spacer {
-    display: block !important;
-    width: 100%;
-    height: 300px !important;
-    min-height: 300px !important;
-    flex: 0 0 300px !important;
-    background: transparent;
-    pointer-events: none;
-    order: 9999;
-    /* Ensure it stays at the bottom */
-    visibility: visible;
+    display: none !important;
 }
 
 @media (max-width: 600px) {
@@ -106,20 +130,15 @@ body {
 }
 
 .next-btn-area {
-    margin-top: 0;
     width: 100%;
-    max-width: 500px;
-    /* Match app container */
     display: flex;
     justify-content: center;
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    padding: 1rem 2rem;
-    background: linear-gradient(to top, rgba(255, 255, 255, 1) 90%, rgba(255, 255, 255, 0));
-    box-sizing: border-box;
+    /* Reset fixed positioning */
+    position: static;
+    transform: none;
+    padding: 0;
+    background: transparent;
+    margin-top: 0;
 }
 
 .next-btn-area.hidden {
@@ -445,24 +464,19 @@ body {
 /* Actions */
 .action-area {
     width: 100%;
-    max-width: 500px;
-    /* Match app container */
     display: flex;
     justify-content: space-between;
     gap: 10px;
     margin-top: 0;
-    position: fixed;
-    /* Use fixed to guarantee visibility at bottom */
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    padding: 1rem 2rem;
-    /* Add horizontal padding */
-    background: linear-gradient(to top, rgba(255, 255, 255, 1) 90%, rgba(255, 255, 255, 0));
+    /* Reset fixed positioning */
+    position: static;
+    transform: none;
+    padding: 0;
+    background: transparent;
     flex-shrink: 0;
-    box-sizing: border-box;
 }
+
+
 
 .hidden {
     display: none !important;

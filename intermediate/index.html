@@ -14,7 +14,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=10013">
+    <link rel="stylesheet" href="style.css?v=10014">
 </head>
 
 <body>
@@ -39,63 +39,63 @@
 
         <!-- Game Screen -->
         <section id="game-screen" class="screen hidden">
-            <div class="hud">
-                <div class="header">
-                    <h1>MANAGER MODE</h1>
-                    <a href="../index.html" class="quit-btn" style="text-decoration: none; font-size: 1.2rem;">🏠</a>
-                </div>
-                <div class="timer-bar">
-                    <div id="timer-fill"></div>
-                </div>
-                <div class="hud-info">
-                    <div class="question-counter">
-                        <span id="question-counter">1/10</span>
+            <div class="content-scroll-wrapper">
+                <div class="hud">
+                    <div class="header">
+                        <h1>MANAGER MODE</h1>
+                        <a href="../index.html" class="quit-btn"
+                            style="text-decoration: none; font-size: 1.2rem;">🏠</a>
                     </div>
-                    <div class="score-board">Score: <span id="score-display">0</span></div>
-                </div>
-            </div>
-
-            <div class="character-area">
-                <div class="customer-avatar">👤</div>
-                <div class="speech-bubble" id="speech-bubble">
-                    <button id="replay-btn" aria-label="もう一度聞く">🔊</button>
-                    <p id="question-text">...</p>
-                </div>
-            </div>
-
-            <!-- Sentence Building Area -->
-            <div class="sentence-builder-area">
-
-                <!-- Where selected words go -->
-                <div class="answer-box">
-                    <p class="label">Your Answer:</p>
-                    <div id="answer-container" class="word-container">
-                        <!-- Selected words appear here -->
+                    <div class="timer-bar">
+                        <div id="timer-fill"></div>
+                    </div>
+                    <div class="hud-info">
+                        <div class="question-counter">
+                            <span id="question-counter">1/10</span>
+                        </div>
+                        <div class="score-board">Score: <span id="score-display">0</span></div>
                     </div>
                 </div>
 
-                <!-- Source pool of words -->
-                <div class="word-pool">
-                    <p class="label">Tap words to build sentence:</p>
-                    <div id="pool-container" class="word-container">
-                        <!-- Shuffled words injected here -->
+                <div class="character-area">
+                    <div class="customer-avatar">👤</div>
+                    <div class="speech-bubble" id="speech-bubble">
+                        <button id="replay-btn" aria-label="もう一度聞く">🔊</button>
+                        <p id="question-text">...</p>
                     </div>
                 </div>
 
+                <!-- Sentence Building Area -->
+                <div class="sentence-builder-area">
+                    <!-- Where selected words go -->
+                    <div class="answer-box">
+                        <p class="label">Your Answer:</p>
+                        <div id="answer-container" class="word-container">
+                            <!-- Selected words appear here -->
+                        </div>
+                    </div>
+
+                    <!-- Source pool of words -->
+                    <div class="word-pool">
+                        <p class="label">Tap words to build sentence:</p>
+                        <div id="pool-container" class="word-container">
+                            <!-- Shuffled words injected here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div id="feedback-msg" class="feedback hidden"></div>
             </div>
 
-            <div class="action-area">
-                <button id="clear-btn" class="btn secondary-btn">RESET</button>
-                <button id="check-btn" class="btn primary-btn" disabled>CHECK ANSWER</button>
+            <div class="fixed-footer">
+                <div class="action-area">
+                    <button id="clear-btn" class="btn secondary-btn">RESET</button>
+                    <button id="check-btn" class="btn primary-btn" disabled>CHECK ANSWER</button>
+                </div>
+                <div id="next-btn-container" class="next-btn-area hidden">
+                    <button id="next-btn" class="btn primary-btn">NEXT QUESTION ▶</button>
+                </div>
             </div>
-
-            <div id="feedback-msg" class="feedback hidden"></div>
-
-            <div id="next-btn-container" class="next-btn-area hidden">
-                <button id="next-btn" class="btn primary-btn">NEXT QUESTION ▶</button>
-            </div>
-
-            <div class="scroll-spacer"></div>
         </section>
 
         <!-- Result Screen -->
@@ -114,7 +114,7 @@
 
     <script src="../js/audio-manager.js"></script>
     <script src="../js/questions.js"></script>
-    <script src="script.js?v=10007"></script>
+    <script src="script.js?v=10014"></script>
 </body>
 
 </html>
