@@ -261,6 +261,8 @@ function checkAnswer() {
 
             // Layout Toggle: Hide Pool to show Feedback
             if (document.querySelector('.word-pool')) document.querySelector('.word-pool').classList.add('hidden');
+            // Hide Action Area (Reset/Check buttons) to save space
+            if (document.querySelector('.action-area')) document.querySelector('.action-area').classList.add('hidden');
 
             // Animate word cards
             document.querySelectorAll('.answer-box .word-card').forEach(card => {
@@ -375,19 +377,23 @@ function handleTimeout() {
                 </div>
             </div>
         </div>
-    `;
+        `;
 
     feedbackMsg.classList.remove('hidden', 'error', 'success');
 
     // Layout Toggle: Hide Pool to show Feedback
     if (document.querySelector('.word-pool')) document.querySelector('.word-pool').classList.add('hidden');
     speak(currentQuestions[currentQuestionIndex].sentence);
+    // Show UI elements (they may have been hidden during feedback)
+    if (document.querySelector('.word-pool')) document.querySelector('.word-pool').classList.remove('hidden');
+    if (document.querySelector('.action-area')) document.querySelector('.action-area').classList.remove('hidden');
+    if (document.querySelector('.answer-box')) document.querySelector('.answer-box').classList.remove('hidden');
     finishQuestion(false); // Mark as incorrect to trigger retry
 }
 
 function updateTimerUI() {
     const percentage = (timeLeft / GAME_DURATION_PER_QUESTION) * 100;
-    timerFill.style.width = `${Math.max(0, percentage)}%`;
+    timerFill.style.width = `${Math.max(0, percentage)}% `;
 }
 
 function updateScoreUI() {
@@ -418,10 +424,10 @@ function showResults() {
 
     if (score > currentHigh) {
         localStorage.setItem(highScoreKey, score);
-        highScoreEl.innerHTML = `🏆 New Record! ${score}`;
+        highScoreEl.innerHTML = `🏆 New Record! ${score} `;
         highScoreEl.style.animation = "pulse 1s infinite";
     } else {
-        highScoreEl.textContent = `Best: ${currentHigh}`;
+        highScoreEl.textContent = `Best: ${currentHigh} `;
         highScoreEl.style.animation = "none";
     }
 
@@ -436,7 +442,7 @@ function showResults() {
     else if (percentage > 0.4) { rank = "Regular Staff (正社員)"; badge = "🥉"; }
     else { rank = "Newbie (新人)"; badge = "🔰"; }
 
-    rankDisplay.innerHTML = `<span style="font-size: 2rem;">${badge}</span><br>Rank: ${rank}`;
+    rankDisplay.innerHTML = `< span style = "font-size: 2rem;" > ${badge}</span > <br>Rank: ${rank}`;
 
     // Perfect Clear Stamp
     // Check if any retry occurred by checking length of history
